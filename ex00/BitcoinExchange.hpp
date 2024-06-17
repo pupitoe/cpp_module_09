@@ -6,7 +6,7 @@
 /*   By: tlassere <tlassere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 17:23:00 by tlassere          #+#    #+#             */
-/*   Updated: 2024/06/17 17:32:09 by tlassere         ###   ########.fr       */
+/*   Updated: 2024/06/17 17:36:21 by tlassere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 # define SUCCESS 0
 # define FAIL 1
+
+# include <map>
+# include <iostream>
+# include <string>
 
 
 
