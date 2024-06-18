@@ -6,7 +6,7 @@
 /*   By: tlassere <tlassere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 17:37:44 by tlassere          #+#    #+#             */
-/*   Updated: 2024/06/18 22:18:10 by tlassere         ###   ########.fr       */
+/*   Updated: 2024/06/18 22:19:43 by tlassere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ int	BitcoinExchange::get_data_exchange(void)
 
 	status = FAIL;
 	fdata.open("./data.csv", std::fstream::ios_base::in);
-	while (fdata.fail() == false && fdata.eof() == false)
+	while (fdata.fail() == false && fdata.eof() == false && status == FAIL)
 	{
 		if (std::getline(fdata, cline) && this->ft_pars_line(cline) == false)
 			status = BAD_FILE;
