@@ -6,7 +6,7 @@
 /*   By: tlassere <tlassere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 17:37:44 by tlassere          #+#    #+#             */
-/*   Updated: 2024/06/18 22:10:55 by tlassere         ###   ########.fr       */
+/*   Updated: 2024/06/18 22:18:10 by tlassere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,5 +159,14 @@ int	BitcoinExchange::get_data_exchange(void)
 	}
 	if (fdata.eof())
 		status = SUCCESS;
+	if (status != SUCCESS)
+		throw BitcoinExchange::BadDataCSV();
 	return (status);
+}
+
+// expetion
+
+const char	*BitcoinExchange::BadDataCSV::what(void) const throw()
+{
+	return ("The file 'data.csv' have a problem");
 }
