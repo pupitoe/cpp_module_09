@@ -6,11 +6,28 @@
 /*   By: tlassere <tlassere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 17:37:44 by tlassere          #+#    #+#             */
-/*   Updated: 2024/06/18 17:00:00 by tlassere         ###   ########.fr       */
+/*   Updated: 2024/06/18 22:10:55 by tlassere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
+
+static std::map<int, int> get_map_month(void)
+{
+	std::map<int, int>	ret;
+	int					c_day;
+	
+	for (int i = 1; i <= 12; i++)
+	{
+		c_day = 31;
+		if (i == 4 || i == 6 || i == 9 || i == 11)
+			c_day = 30;
+		else if (i == 2)
+			c_day = 29;
+		ret.insert(std::pair<int, int>(i, c_day));
+	}
+	return (ret);
+}
 
 static size_t ft_count_occurence(std::string const& str, int c)
 {
@@ -25,11 +42,25 @@ static size_t ft_count_occurence(std::string const& str, int c)
 			count++;
 		it++;
 	}
-	return (count);	
+	return (count);
+}
+
+static t_date	ft_get_date(std::string const& date)
+{
+	t_date	res = {0, 0, 0};
+
+	if (date.length() == 10 && date[4] == '-' && date[7] == '-')
+	{
+		res.year = std::strtol(date.c_str(), NULL, 0);
+		res.month = std::strtol(date.c_str() + 5, NULL, 0);
+		res.day = std::strtol(date.c_str() + 8, NULL, 0);
+	}
+	return (res);
 }
 
 BitcoinExchange::BitcoinExchange(void)
 {
+	this->_date_asignation = get_map_month();
 	this->get_data_exchange();
 	return ;
 }
@@ -50,25 +81,68 @@ BitcoinExchange&	BitcoinExchange::operator=(BitcoinExchange const&)
 	return (*this);
 }
 
-bool			BitcoinExchange::ft_is_valide_date(std::string const& date)
+bool	BitcoinExchange::ft_is_valide_date(std::string const& date)
 {
-	bool	res;
+	bool				res;
+	std::map<int, int>	date_month;
+	t_date	date_int;
 
 	res = false;
-	if (date.length() == 10 && ft_count_occurence(date, '-') == 2)
+	if (date.length() == 10 && ft_count_occurence(date, '-') == 2
+		&& date.find_first_not_of("0123456789-") > date.length())
 	{
-		res = true;
+		date_int = ft_get_date(date);
+		if (date_int.month > 0 && date_int.month <= 12
+			&& date_int.day > 0
+			&& date_int.day <= this->_date_asignation[date_int.month])
+			res = true;
 	}
 	return (res);	
 }
 
-void	BitcoinExchange::ft_pars_line(std::string const& str)
+
+bool	BitcoinExchange::ft_is_valide_number(std::string const& number)
 {
-	this->ft_is_valide_date("ahhhhhhhhh");
-	(void)str;
-	std::cout << this->ft_is_valide_date("2000-20-10") << std::endl;
-	//std::cout << str << std::endl;
+	bool	ret;
+
+	ret = false;
+	if (number.length() > 0
+		&& number.find_first_not_of("0123456789,") > number.length()
+		&& ft_count_occurence(number, ',') <= 1
+		&& number[number.length() -1] != ',')
+		ret = true;
+	return (ret);
 }
+
+bool	BitcoinExchange::ft_pars_line(std::string const& str)
+{
+	bool		valide_line;
+	std::string	date;
+	std::string	value;
+	
+	valide_line = false;
+	if (str.length() > 11 && str[10] == ',')
+	{
+		date = str.substr(0, 10);
+		value = str.c_str() + 11;
+		if (this->ft_is_valide_date(date) && this->ft_is_valide_number(value))
+		{
+			try
+			{
+				this->_file_exchange.insert(std::pair<std::string, double>(date,
+					std::strtod(value.c_str(), NULL)));
+				valide_line = true;
+			}
+			catch(const std::exception& e)
+			{
+				std::cerr << e.what() << '\n';
+			}
+		}
+	}
+	return (valide_line);
+}
+
+// TODO throw exeption if status is fail
 
 int	BitcoinExchange::get_data_exchange(void)
 {
@@ -76,14 +150,12 @@ int	BitcoinExchange::get_data_exchange(void)
 	std::fstream	fdata;
 	std::string		cline;
 
-
 	status = FAIL;
 	fdata.open("./data.csv", std::fstream::ios_base::in);
-	std::cout << "lkk" << std::endl;
 	while (fdata.fail() == false && fdata.eof() == false)
 	{
-		if (std::getline(fdata, cline))
-			this->ft_pars_line(cline);
+		if (std::getline(fdata, cline) && this->ft_pars_line(cline) == false)
+			status = BAD_FILE;
 	}
 	if (fdata.eof())
 		status = SUCCESS;

@@ -6,7 +6,7 @@
 /*   By: tlassere <tlassere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 17:23:00 by tlassere          #+#    #+#             */
-/*   Updated: 2024/06/18 16:14:18 by tlassere         ###   ########.fr       */
+/*   Updated: 2024/06/18 22:10:59 by tlassere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,21 @@
 
 # define SUCCESS 0
 # define FAIL 1
+# define BAD_FILE 2
 
 # include <map>
 # include <iostream>
 # include <string>
 # include <fstream>
+# include <cstdlib>
+
+typedef struct s_date
+{
+	int	year;
+	int	month;
+	int	day;
+}t_date;
+
 
 class	BitcoinExchange
 {
@@ -28,16 +38,16 @@ class	BitcoinExchange
 		BitcoinExchange& operator=(BitcoinExchange const& cpy);
 
 		std::map<std::string, double> _file_exchange;
+		std::map<int, int> _date_asignation;
 
 		int				get_data_exchange(void);
-		void			ft_pars_line(std::string const& str);
+		bool			ft_pars_line(std::string const& str);
 		bool			ft_is_valide_date(std::string const& date);
 		bool			ft_is_valide_number(std::string const& number);
 
 	public:
 		BitcoinExchange(void);
 		~BitcoinExchange(void);
-		
 };
 
 #endif
