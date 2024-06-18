@@ -6,7 +6,7 @@
 /*   By: tlassere <tlassere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 17:23:00 by tlassere          #+#    #+#             */
-/*   Updated: 2024/06/18 15:53:17 by tlassere         ###   ########.fr       */
+/*   Updated: 2024/06/18 16:14:18 by tlassere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ class	BitcoinExchange
 
 		int				get_data_exchange(void);
 		void			ft_pars_line(std::string const& str);
+		bool			ft_is_valide_date(std::string const& date);
+		bool			ft_is_valide_number(std::string const& number);
 
 	public:
 		BitcoinExchange(void);
