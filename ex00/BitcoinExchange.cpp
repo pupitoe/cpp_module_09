@@ -6,7 +6,7 @@
 /*   By: tlassere <tlassere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 17:37:44 by tlassere          #+#    #+#             */
-/*   Updated: 2024/06/18 16:57:06 by tlassere         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:00:00 by tlassere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ bool			BitcoinExchange::ft_is_valide_date(std::string const& date)
 	bool	res;
 
 	res = false;
-	if (date.length() == 10 && ft_count_occurence(date, '_') == 3)
+	if (date.length() == 10 && ft_count_occurence(date, '-') == 2)
 	{
-
+		res = true;
 	}
 	return (res);	
 }
@@ -66,6 +66,7 @@ void	BitcoinExchange::ft_pars_line(std::string const& str)
 {
 	this->ft_is_valide_date("ahhhhhhhhh");
 	(void)str;
+	std::cout << this->ft_is_valide_date("2000-20-10") << std::endl;
 	//std::cout << str << std::endl;
 }
 
