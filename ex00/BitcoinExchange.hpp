@@ -6,7 +6,7 @@
 /*   By: tlassere <tlassere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 17:23:00 by tlassere          #+#    #+#             */
-/*   Updated: 2024/06/17 17:36:21 by tlassere         ###   ########.fr       */
+/*   Updated: 2024/06/18 15:53:17 by tlassere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,23 @@
 # include <map>
 # include <iostream>
 # include <string>
+# include <fstream>
 
+class	BitcoinExchange
+{
+	private:
+		BitcoinExchange(BitcoinExchange const& cpy);
+		BitcoinExchange& operator=(BitcoinExchange const& cpy);
 
+		std::map<std::string, double> _file_exchange;
+
+		int				get_data_exchange(void);
+		void			ft_pars_line(std::string const& str);
+
+	public:
+		BitcoinExchange(void);
+		~BitcoinExchange(void);
+		
+};
 
 #endif
