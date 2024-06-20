@@ -6,7 +6,7 @@
 /*   By: tlassere <tlassere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 17:37:44 by tlassere          #+#    #+#             */
-/*   Updated: 2024/06/21 00:35:06 by tlassere         ###   ########.fr       */
+/*   Updated: 2024/06/21 01:46:08 by tlassere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,7 @@ void	BitcoinExchange::exchange(std::string const& date,
 				if (this->ft_is_valide_number(number))
 					this->print_exchange(date, number);
 				else
-					std::cout << "Error: bad input => " << date << std::endl;
+					std::cout << "Error: bad input => " << number << std::endl;
 			}
 			else
 				std::cout << "Error: too large a number." << std::endl;	

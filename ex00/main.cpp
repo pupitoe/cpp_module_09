@@ -26,21 +26,23 @@ static void	ft_get_value(std::string const& cline, std::string& value)
 {
 	size_t	start_value;
 	size_t	end_value;
+	int		buffer;
 
-	start_value = cline.find_first_of('|');
-	if (start_value > cline.length())
-		start_value = 0;
-
-	value = cline.c_str() + start_value
-		+ (*(cline.c_str() + start_value) != '\0');
-
-	start_value = value.find_first_not_of(' ');
-	if (start_value > value.length())
-		start_value = 0;
-	end_value = value.find_last_not_of(' ');
-	if (end_value > value.length())
-		end_value = 0;
-	value = value.substr(start_value, value.length());
+	start_value = 0;
+	end_value = 0;
+	buffer = 0;
+	while (start_value < cline.length() && (!buffer || buffer == 1
+		|| ((buffer >> 1) && cline[buffer] != ' ')))
+	{
+		if (cline[start_value] == '|')
+			buffer |= 1;
+		else if (cline[start_value] != ' ' && buffer)
+			buffer |= 1 << 1;
+		if (buffer >> 1)
+			end_value++;
+		start_value++;
+	}
+	value = cline.substr(start_value - end_value, start_value);
 }
 
 static void	ft_reader(BitcoinExchange& btc, std::fstream& file)
@@ -52,11 +54,13 @@ static void	ft_reader(BitcoinExchange& btc, std::fstream& file)
 	std::getline(file, cline);
 	while (file.fail() == false && file.eof() == false)
 	{
-		if (std::getline(file, cline))
+		if (std::getline(file, cline) && cline.length() > 0)
 		{
 			ft_get_date(cline, date);
 			ft_get_value(cline, value);
 			btc.exchange(date, value);
+			//std::cout << "date: " << date << std::endl;
+			//std::cout << "value: " << value << std::endl;
 		}
 	}
 }
