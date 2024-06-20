@@ -56,11 +56,9 @@ static void	ft_reader(BitcoinExchange& btc, std::fstream& file)
 		{
 			ft_get_date(cline, date);
 			ft_get_value(cline, value);
-			std::cout << "date: " << date << std::endl;
-			std::cout << "value: "<< value << std::endl;
+			btc.exchange(date, value);
 		}
 	}
-	(void)btc;
 }
 
 static int	ft_btc(std::string const& path)
