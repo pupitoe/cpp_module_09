@@ -6,7 +6,7 @@
 /*   By: tlassere <tlassere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 17:23:00 by tlassere          #+#    #+#             */
-/*   Updated: 2024/06/18 22:18:02 by tlassere         ###   ########.fr       */
+/*   Updated: 2024/06/20 23:11:09 by tlassere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,19 @@ class	BitcoinExchange
 		std::map<std::string, double> _file_exchange;
 		std::map<int, int> _date_asignation;
 
-		int				get_data_exchange(void);
-		bool			ft_pars_line(std::string const& str);
-		bool			ft_is_valide_date(std::string const& date);
-		bool			ft_is_valide_number(std::string const& number);
+		int		get_data_exchange(void);
+		bool	ft_pars_line(std::string const& str);
+		bool	ft_is_valide_date(std::string const& date);
+		bool	ft_is_valide_number(std::string const& number);
+
+		void	print_exchange(std::string const& date,
+			std::string const& number);
 
 	public:
 		BitcoinExchange(void);
 		~BitcoinExchange(void);
 
+		void	exchange(std::string const& date, std::string const& number);
 		class BadDataCSV: public std::exception
 		{
 			public:

@@ -12,9 +12,17 @@
 
 # include "BitcoinExchange.hpp"
 
-static int	ft_reader(BitcoinExchange const& btc, std::fstream const& file)
+static void	ft_reader(BitcoinExchange& btc, std::fstream const&)
 {
+	//std::string	cline;
 
+	//std::getline(file, cline);
+	//while (file.fail() == false && file.eof() == false)
+	//{
+	//	if (std::getline(file, cline))
+			
+	//}
+	btc.exchange("2009-12-01", "4");
 }
 
 static int	ft_btc(std::string const& path)
@@ -27,11 +35,12 @@ static int	ft_btc(std::string const& path)
 		BitcoinExchange	btc;
 		std::fstream	file;
 
-		file.open(path, std::ios_base::in);
+		file.open(path.c_str(), std::ios_base::in);
 		if (file.fail() == false)
 		{
-			
+			ft_reader(btc, file);
 			file.close();
+			status = SUCCESS;
 		}
 		else
 			std::cout << "Error: could not open file." << std::endl;
@@ -40,6 +49,7 @@ static int	ft_btc(std::string const& path)
 	{
 		std::cerr << e.what() << '\n';
 	}
+	return (status);
 }
 
 int	main(int argc, char **argv)

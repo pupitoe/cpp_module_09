@@ -6,7 +6,7 @@
 /*   By: tlassere <tlassere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 17:37:44 by tlassere          #+#    #+#             */
-/*   Updated: 2024/06/20 14:38:32 by tlassere         ###   ########.fr       */
+/*   Updated: 2024/06/21 00:26:24 by tlassere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,78 @@ int	BitcoinExchange::get_data_exchange(void)
 	if (status != SUCCESS)
 		throw BitcoinExchange::BadDataCSV();
 	return (status);
+}
+
+static double	get_value_it(std::map<std::string, double> *data,
+	std::string const& date, std::string& replace)
+{
+	double									associed_data;
+	std::map<std::string, double>::iterator	it;
+
+	associed_data = -1;
+	try
+	{
+		data->insert(std::pair<std::string, double>(date, 69));
+		it = data->find(date);
+		if (it != data->begin())
+		{
+			--it;
+			associed_data = it->second;
+			replace = it->first;
+		}
+		else
+			std::cout << "No value match :(" << std::endl;
+		data->erase(date);
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+	return (associed_data);
+}
+
+void	BitcoinExchange::print_exchange(std::string const& date,
+	std::string const& number)
+{
+	double	associed_data;
+	std::string	replace_date;
+
+	associed_data = -1;
+	replace_date = date;
+	if (this->_file_exchange[date])
+		associed_data = this->_file_exchange[date];
+	else
+		associed_data = get_value_it(&this->_file_exchange, date, replace_date);
+	if (associed_data != -1)
+		std::cout << replace_date << " => " << number << " => " <<
+			std::strtod(number.c_str(), NULL) * associed_data << std::endl;
+}
+
+void	BitcoinExchange::exchange(std::string const& date,
+	std::string const& number)
+{
+	double	buffer;
+
+	buffer = std::strtod(number.c_str(), NULL);
+	if (this->ft_is_valide_date(date))
+	{
+		if (buffer >= 0)
+		{
+			if (buffer < 1000)
+			{
+				if (this->ft_is_valide_number(number))
+					this->print_exchange(date, number);
+				else
+					std::cout << "Error: bad input => " << date << std::endl;
+			}
+			else
+				std::cout << "Error: too large a number." << std::endl;	
+		}
+		else
+			std::cout << "Error: not a positive number." << std::endl;
+	}
+	else
+		std::cout << "Error: bad input => " << date << std::endl;
 }
 
 // expetion
