@@ -6,7 +6,7 @@
 /*   By: tlassere <tlassere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 17:23:00 by tlassere          #+#    #+#             */
-/*   Updated: 2024/06/20 23:11:09 by tlassere         ###   ########.fr       */
+/*   Updated: 2024/06/21 00:34:59 by tlassere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <string>
 # include <fstream>
 # include <cstdlib>
+# include <cmath>
 
 typedef struct s_date
 {
