@@ -6,7 +6,7 @@
 /*   By: tlassere <tlassere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 17:37:44 by tlassere          #+#    #+#             */
-/*   Updated: 2024/06/18 22:19:43 by tlassere         ###   ########.fr       */
+/*   Updated: 2024/06/20 14:38:32 by tlassere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ static t_date	ft_get_date(std::string const& date)
 
 	if (date.length() == 10 && date[4] == '-' && date[7] == '-')
 	{
-		res.year = std::strtol(date.c_str(), NULL, 0);
-		res.month = std::strtol(date.c_str() + 5, NULL, 0);
-		res.day = std::strtol(date.c_str() + 8, NULL, 0);
+		res.year = std::strtol(date.c_str(), NULL, 10);
+		res.month = std::strtol(date.c_str() + 5, NULL, 10);
+		res.day = std::strtol(date.c_str() + 8, NULL, 10);
 	}
 	return (res);
 }
@@ -100,16 +100,16 @@ bool	BitcoinExchange::ft_is_valide_date(std::string const& date)
 	return (res);	
 }
 
-
+// TODO: check double overflow
 bool	BitcoinExchange::ft_is_valide_number(std::string const& number)
 {
 	bool	ret;
 
 	ret = false;
 	if (number.length() > 0
-		&& number.find_first_not_of("0123456789,") > number.length()
-		&& ft_count_occurence(number, ',') <= 1
-		&& number[number.length() -1] != ',')
+		&& number.find_first_not_of("0123456789.") > number.length()
+		&& ft_count_occurence(number, '.') <= 1
+		&& number[number.length() -1] != '.')
 		ret = true;
 	return (ret);
 }
@@ -142,8 +142,6 @@ bool	BitcoinExchange::ft_pars_line(std::string const& str)
 	return (valide_line);
 }
 
-// TODO throw exeption if status is fail
-
 int	BitcoinExchange::get_data_exchange(void)
 {
 	int	status;
@@ -152,13 +150,19 @@ int	BitcoinExchange::get_data_exchange(void)
 
 	status = FAIL;
 	fdata.open("./data.csv", std::fstream::ios_base::in);
-	while (fdata.fail() == false && fdata.eof() == false && status == FAIL)
+	if (fdata.fail() == false)
 	{
-		if (std::getline(fdata, cline) && this->ft_pars_line(cline) == false)
-			status = BAD_FILE;
+		std::getline(fdata, cline);
+		while (fdata.fail() == false && fdata.eof() == false && status == FAIL)
+		{
+			if (std::getline(fdata, cline)
+				&& this->ft_pars_line(cline) == false)
+				status = BAD_FILE;
+		}
+		if (fdata.eof())
+			status = SUCCESS;
+		fdata.close();
 	}
-	if (fdata.eof())
-		status = SUCCESS;
 	if (status != SUCCESS)
 		throw BitcoinExchange::BadDataCSV();
 	return (status);
