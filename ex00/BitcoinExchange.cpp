@@ -6,7 +6,7 @@
 /*   By: tlassere <tlassere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 17:37:44 by tlassere          #+#    #+#             */
-/*   Updated: 2024/06/21 01:46:08 by tlassere         ###   ########.fr       */
+/*   Updated: 2024/06/21 01:48:13 by tlassere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ bool	BitcoinExchange::ft_is_valide_date(std::string const& date)
 	return (res);	
 }
 
-// TODO: check double overflow
 bool	BitcoinExchange::ft_is_valide_number(std::string const& number)
 {
 	bool	ret;
