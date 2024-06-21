@@ -6,7 +6,7 @@
 /*   By: tlassere <tlassere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 14:34:08 by tlassere          #+#    #+#             */
-/*   Updated: 2024/06/21 14:44:52 by tlassere         ###   ########.fr       */
+/*   Updated: 2024/06/21 15:08:59 by tlassere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static void	use_rpn(std::string str)
 {
-	RPN	teter;
+	RPN	tester;
 
-	(void)str;
+	tester.use(str);
 }
 
 int	main(int argc, char **argv)
