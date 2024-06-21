@@ -42,7 +42,7 @@ static void	ft_get_value(std::string const& cline, std::string& value)
 			end_value++;
 		start_value++;
 	}
-	value = cline.substr(start_value - end_value, start_value);
+	value = cline.substr(start_value - end_value, end_value);
 }
 
 static void	ft_reader(BitcoinExchange& btc, std::fstream& file)
