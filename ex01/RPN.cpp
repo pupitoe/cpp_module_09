@@ -6,7 +6,7 @@
 /*   By: tlassere <tlassere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 14:36:04 by tlassere          #+#    #+#             */
-/*   Updated: 2024/06/21 20:23:54 by tlassere         ###   ########.fr       */
+/*   Updated: 2024/06/21 20:35:56 by tlassere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ RPN& RPN::operator=(RPN const&)
 
 void	RPN::add_stack(long nbr)
 {
-	if (this->_last_action == OPERATOR && this->_rpnizer.size() < 1)
+	if (this->_last_action == OPERATOR && this->_rpnizer.size() > 1)
 		throw RPN::BadFormat();
 	this->_last_action = PUSH_STACK;
 	this->_rpnizer.push(nbr);

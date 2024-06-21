@@ -6,7 +6,7 @@
 /*   By: tlassere <tlassere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 14:35:29 by tlassere          #+#    #+#             */
-/*   Updated: 2024/06/21 20:22:13 by tlassere         ###   ########.fr       */
+/*   Updated: 2024/06/21 20:44:45 by tlassere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ class	RPN
 		RPN& operator=(RPN const& cpy);
 
 		std::stack<long>	_rpnizer;
-		int					_last_action;	
+		int					_last_action;
 
 		class	BadFormat: public std::exception
 		{
@@ -40,7 +40,6 @@ class	RPN
 		void	subtract_op(void);
 		void	divisor_op(void);
 		void	multiplie_op(void);
-
 
 		void	op_rpm(std::string const& c);
 		void	add_stack(long nbr);
