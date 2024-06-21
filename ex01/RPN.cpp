@@ -6,7 +6,7 @@
 /*   By: tlassere <tlassere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 14:36:04 by tlassere          #+#    #+#             */
-/*   Updated: 2024/06/21 15:12:17 by tlassere         ###   ########.fr       */
+/*   Updated: 2024/06/21 16:35:27 by tlassere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,7 @@ RPN& RPN::operator=(RPN const&)
 
 void	RPN::op_rpm(std::string const& c)
 {
-	static int a = 0;
 	std::cout << c << std::endl;
-	std::cout << a << std::endl;
-	a++;
-	(void)c;
 }
 
 void	RPN::use(std::string const& str)
@@ -61,7 +57,6 @@ void	RPN::use(std::string const& str)
 		std::cout << e.what() << '\n';
 	}
 }
-
 
 // exeption
 const char	*RPN::BadFormat::what(void) const throw()
