@@ -6,7 +6,7 @@
 /*   By: tlassere <tlassere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 21:15:00 by tlassere          #+#    #+#             */
-/*   Updated: 2024/06/22 18:25:00 by tlassere         ###   ########.fr       */
+/*   Updated: 2024/06/22 21:27:22 by tlassere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static bool	ft_is_sorted(std::vector<int> const& content)
 	it_last = content.begin();
 	if (it != content.end())
 		it++;
-	while (it != content.end() && *it_last < *it)
+	while (it != content.end() && *it_last <= *it)
 	{
 		it++;
 		it_last++;
@@ -37,29 +37,35 @@ static bool	ft_is_sorted(std::vector<int> const& content)
 static void	merge_sort_vector_op(std::vector<int>& content, size_t start,
 	size_t len)
 {
-	bool	sorted;
-	int		buffer;
-	size_t	i;
+	std::vector<int>	buffer;
+	size_t				first;
+	size_t				second;
 
-	sorted = false;
-	while (!sorted)
+	buffer = content;
+	second = 0;
+	first = 0;
+	while (first < len / 2 && second < len / 2 + len % 2)
 	{
-		sorted = true;
-		i = 0;
-		while (i + 1 < len)
+		if (buffer[start + first] < buffer[start + len / 2 + second])
 		{
-			if (*(content.begin() + i + start)
-				> *(content.begin() + i + start + 1))
-			{
-				buffer = *(content.begin() + i + start);
-				*(content.begin() + i + start) =
-					*(content.begin() + i + start + 1);
-				*(content.begin() + i + start + 1) = buffer;
-				sorted = false;
-			}
-			i++;
+			content[start + first + second] = buffer[start + first];
+			first++;
+		}
+		else
+		{
+			content[start + first + second]
+				= buffer[start + len / 2 + second];
+			second++;
 		}
 	}
+	while (first < len / 2)
+	{
+		content[start + first + second] = buffer[start + first];
+		first++;
+	}
+	while (second < len / 2 + len % 2)
+		content[start + second + first]
+			= buffer[start + len / 2 + second++];
 }
 
 static void	merge_sort_vector(std::vector<int>& content, size_t start,
@@ -72,7 +78,6 @@ static void	merge_sort_vector(std::vector<int>& content, size_t start,
 	merge_sort_vector_op(content, start, len);
 }
 
-// todo check doublon
 void	ft_sort_vector(int const argc, char **argv)
 {
 	std::vector<int>	content;
@@ -91,4 +96,5 @@ void	ft_sort_vector(int const argc, char **argv)
 	}
 	if (i > 0 && ft_is_sorted(content) == false)
 		merge_sort_vector(content, 0, content.size());
+	std::cout << "sorted: " << ft_is_sorted(content) << std::endl;
 }
