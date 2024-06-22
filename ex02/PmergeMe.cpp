@@ -6,14 +6,14 @@
 /*   By: tlassere <tlassere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 21:15:00 by tlassere          #+#    #+#             */
-/*   Updated: 2024/06/22 21:27:22 by tlassere         ###   ########.fr       */
+/*   Updated: 2024/06/22 22:06:12 by tlassere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 
 
-static bool	ft_is_sorted(std::vector<int> const& content)
+bool	ft_is_sorted(std::vector<int> const& content)
 {
 	std::vector<int>::const_iterator	it;
 	std::vector<int>::const_iterator	it_last;
@@ -53,19 +53,16 @@ static void	merge_sort_vector_op(std::vector<int>& content, size_t start,
 		}
 		else
 		{
-			content[start + first + second]
-				= buffer[start + len / 2 + second];
+			content[start + first + second] = buffer[start + len / 2 + second];
 			second++;
 		}
 	}
-	while (first < len / 2)
-	{
+	first--;
+	while (++first, first < len / 2)
 		content[start + first + second] = buffer[start + first];
-		first++;
-	}
-	while (second < len / 2 + len % 2)
-		content[start + second + first]
-			= buffer[start + len / 2 + second++];
+	second--;
+	while (++second, second < len / 2 + len % 2)
+		content[start + first + second] = buffer[start + len / 2 + second];
 }
 
 static void	merge_sort_vector(std::vector<int>& content, size_t start,
@@ -78,7 +75,7 @@ static void	merge_sort_vector(std::vector<int>& content, size_t start,
 	merge_sort_vector_op(content, start, len);
 }
 
-void	ft_sort_vector(int const argc, char **argv)
+std::vector<int>	ft_sort_vector(int const argc, char **argv)
 {
 	std::vector<int>	content;
 	int					i;
@@ -96,5 +93,5 @@ void	ft_sort_vector(int const argc, char **argv)
 	}
 	if (i > 0 && ft_is_sorted(content) == false)
 		merge_sort_vector(content, 0, content.size());
-	std::cout << "sorted: " << ft_is_sorted(content) << std::endl;
+	return (content);
 }
