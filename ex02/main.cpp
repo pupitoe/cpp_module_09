@@ -6,7 +6,7 @@
 /*   By: tlassere <tlassere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 21:16:54 by tlassere          #+#    #+#             */
-/*   Updated: 2024/06/22 23:25:42 by tlassere         ###   ########.fr       */
+/*   Updated: 2024/06/23 14:13:45 by tlassere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static bool	good_syntax(int argc, char **argv)
 	while (i < argc && ret)
 	{
 		buffer = argv[i];
-		if (buffer.find_first_not_of("0123456789") < buffer.length())
+		if (!buffer.length()
+			|| buffer.find_first_not_of("0123456789") < buffer.length())
 			ret = false;
 		i++;
 	}
