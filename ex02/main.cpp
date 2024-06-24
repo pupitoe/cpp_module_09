@@ -6,7 +6,7 @@
 /*   By: tlassere <tlassere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 21:16:54 by tlassere          #+#    #+#             */
-/*   Updated: 2024/06/23 14:13:45 by tlassere         ###   ########.fr       */
+/*   Updated: 2024/06/24 23:50:38 by tlassere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ static void	ft_print_result(int argc, char **argv)
 			<< std::endl;
 	}
 	else
-		std::cout << "Error" << std::endl;
+		std::cout << "Error with sort of vector" << std::endl;
 }
 
 int	main(int argc, char **argv)
