@@ -6,7 +6,7 @@
 /*   By: tlassere <tlassere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 17:37:44 by tlassere          #+#    #+#             */
-/*   Updated: 2024/06/21 01:48:13 by tlassere         ###   ########.fr       */
+/*   Updated: 2024/06/25 14:36:24 by tlassere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,7 @@ void	BitcoinExchange::exchange(std::string const& date,
 	{
 		if (buffer >= 0)
 		{
-			if (buffer < 1000)
+			if (buffer <= 1000)
 			{
 				if (this->ft_is_valide_number(number))
 					this->print_exchange(date, number);
